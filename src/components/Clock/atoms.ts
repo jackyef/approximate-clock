@@ -1,9 +1,11 @@
 import { getHourText, getMinuteText } from "@/lib/time";
 import { atom } from "jotai";
 
-export const hourAtom = atom(0);
-export const minuteAtom = atom(0);
-export const secondAtom = atom(0);
+const now = new Date();
+
+export const hourAtom = atom(now.getHours());
+export const minuteAtom = atom(now.getMinutes());
+export const secondAtom = atom(now.getMinutes());
 
 export const minuteTextAtom = atom((get) => {
   return getMinuteText(get(minuteAtom));
