@@ -1,13 +1,14 @@
-import { MINUTE_MODIFIER_TEXTS } from "@/lib/time";
 import clsx from "clsx";
+import { LayoutGroup, motion } from "framer-motion";
 import { useAtomValue } from "jotai";
 import { minuteTextAtom } from "../atoms";
 import { HourText } from "./HourText";
 import { MinuteText } from "./MinuteText";
-import { OutlineText } from "./OutlineText";
+import { ModifierText } from "./ModifierText";
 
 export const TextBackground = () => {
   const minuteText = useAtomValue(minuteTextAtom);
+  const isExactHour = minuteText === null;
 
   return (
     <div
@@ -16,17 +17,21 @@ export const TextBackground = () => {
       )}
     >
       <MinuteText />
-      <div>
-        {MINUTE_MODIFIER_TEXTS.map((text) => (
-          <OutlineText
-            key={text}
-            text={text}
-            active={minuteText?.endsWith(text)}
-          />
-        ))}
-      </div>
 
-      <HourText />
+      <LayoutGroup>
+        <div
+          className={clsx("flex flex-col", {
+            "flex-col-reverse": isExactHour,
+          })}
+        >
+          <motion.div layout layoutId="modifierText">
+            <ModifierText />
+          </motion.div>
+          <motion.div layout layoutId="hourText">
+            <HourText />
+          </motion.div>
+        </div>
+      </LayoutGroup>
     </div>
   );
 };

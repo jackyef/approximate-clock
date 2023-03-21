@@ -4,28 +4,29 @@ import { useEffect, useRef } from "react";
 
 export const SingleTextLineContainer = ({
   children,
-  initialElementId,
+  activeElementId,
+  translateDirection = "left",
 }: {
   children?: React.ReactNode;
-  initialElementId?: string;
+  activeElementId?: string;
+  translateDirection?: "left" | "right";
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (containerRef.current) {
-      const startingElement = containerRef.current.querySelector(
-        `#${initialElementId}`
+      const activeElement = containerRef.current.querySelector(
+        `#${activeElementId}`
       );
 
-      if (startingElement) {
-        startingElement.scrollIntoView({
+      if (activeElement) {
+        activeElement.scrollIntoView({
           behavior: "smooth",
-          block: "center",
           inline: "center",
         });
       }
     }
-  }, [initialElementId]);
+  }, [activeElementId]);
 
   return (
     <div className="overflow-x-hidden py-8">
@@ -33,12 +34,12 @@ export const SingleTextLineContainer = ({
         ref={containerRef}
         className={clsx(`w-full whitespace-nowrap`)}
         initial={{ x: 0 }}
-        animate={{ x: "-30%" }}
+        animate={{ x: translateDirection === "left" ? "-3%" : "5%" }}
         exit={{ x: "100%", opacity: 0 }}
         transition={{
           repeat: Infinity,
           repeatType: "reverse",
-          duration: 60 * 2,
+          duration: 20,
         }}
       >
         {children}

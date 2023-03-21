@@ -1,9 +1,9 @@
 export const MINUTE_TEXTS = [
-  "five",
   "ten",
-  "a quarter",
-  "twenty",
   "half",
+  "twenty",
+  "five",
+  "a quarter",
 ] as const;
 
 export const MINUTE_MODIFIER_TEXTS = ["to", "past"] as const;

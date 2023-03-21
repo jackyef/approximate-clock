@@ -14,7 +14,7 @@ export const OutlineText = ({
       id={id}
       className={clsx(
         "relative inline-block text-6xl md:text-9xl font-bold",
-        "mr-6 md:mr-12",
+        "mr-6 md:mr-12 transition-opacity duration-300 ease-in-out",
         {
           [clsx(
             "opacity-10 text-gray-100 dark:text-gray-900",

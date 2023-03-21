@@ -5,10 +5,12 @@ import { OutlineText } from "./OutlineText";
 import { SingleTextLineContainer } from "./SingleTextLineContainer";
 
 export const MinuteText = () => {
-  const minuteText = useAtomValue(minuteTextAtom);
+  const minuteText = useAtomValue(minuteTextAtom)?.replace(/ (past|to)/, "");
+
+  const activeElementId = `bg-m-${minuteText?.replace(" ", "")}`;
 
   return (
-    <SingleTextLineContainer key={minuteText} initialElementId="initialMinuteText">
+    <SingleTextLineContainer activeElementId={activeElementId}>
       {MINUTE_TEXTS.map((text) => {
         const active = minuteText?.startsWith(text);
 
@@ -20,7 +22,7 @@ export const MinuteText = () => {
         return (
           <OutlineText
             key={text}
-            id="initialMinuteText"
+            id={active ? activeElementId : undefined}
             text={text}
             active={active}
           />

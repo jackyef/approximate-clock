@@ -6,9 +6,14 @@ import { SingleTextLineContainer } from "./SingleTextLineContainer";
 
 export const HourText = () => {
   const hourText = useAtomValue(hourTextAtom);
+  const activeElementId = `bg-h-${hourText}`;
 
   return (
-    <SingleTextLineContainer initialElementId="initialHourText">
+    <SingleTextLineContainer
+      key={hourText}
+      activeElementId={activeElementId}
+      translateDirection="right"
+    >
       {HOUR_TEXTS.map((text) => {
         const active = hourText === text;
         return <OutlineText key={text} text={text} active={active} />;
@@ -20,7 +25,7 @@ export const HourText = () => {
             key={text}
             text={text}
             active={active}
-            id={active ? "initialHourText" : undefined}
+            id={active ? activeElementId : undefined}
           />
         );
       })}
