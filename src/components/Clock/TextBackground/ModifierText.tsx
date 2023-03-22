@@ -20,6 +20,10 @@ export const ModifierText = () => {
       activeElementId={activeElementId}
     >
       {MINUTE_MODIFIER_TEXTS.map((text) => (
+        <OutlineText key={text} text={text} />
+      ))}
+      <OutlineText text={"o'clock"} />
+      {MINUTE_MODIFIER_TEXTS.map((text) => (
         <OutlineText
           key={text}
           text={text}
@@ -33,6 +37,10 @@ export const ModifierText = () => {
         id="bg-mm-oclock"
         active={minuteText === null}
       />
+      {MINUTE_MODIFIER_TEXTS.map((text) => (
+        <OutlineText key={text} text={text} />
+      ))}
+      <OutlineText text={"o'clock"} />
     </SingleTextLineContainer>
   );
 };

@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import { useViewportResize } from "../hooks/useViewportResize";
 
 export const SingleTextLineContainer = ({
   children,
@@ -13,25 +14,41 @@ export const SingleTextLineContainer = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const scrollActiveElementIntoView = useCallback(() => {
     if (containerRef.current) {
       const activeElement = containerRef.current.querySelector(
         `#${activeElementId}`
       );
 
       if (activeElement) {
-        activeElement.scrollIntoView({
+        // Apparently only one smooth scroll can happen at a time, at least for Chrome
+        // https://stackoverflow.com/questions/66586455/why-doesnt-scrollintoview-work-on-two-simultaneous-elements
+        // activeElement.scrollIntoView({
+        //   behavior: "smooth",
+        //   inline: "center",
+        // });
+
+        // So we do some math and use `scrollTo()` instead
+        const baseX = (activeElement as HTMLDivElement).offsetLeft;
+        const activeElementWidth = (activeElement as HTMLDivElement).offsetWidth;
+        containerRef.current.scrollTo({
+          left: baseX + activeElementWidth / 2 - containerRef.current.offsetWidth / 2,
           behavior: "smooth",
-          inline: "center",
-        });
+        })
       }
     }
   }, [activeElementId]);
 
+  useEffect(() => {
+    scrollActiveElementIntoView();
+  }, [scrollActiveElementIntoView]);
+
+  useViewportResize(scrollActiveElementIntoView);
+
   return (
-    <div className="overflow-x-hidden py-8">
+    <div 
+    ref={containerRef} className="overflow-x-hidden py-4 md:py-8">
       <motion.div
-        ref={containerRef}
         className={clsx(`w-full whitespace-nowrap`)}
         initial={{ x: 0 }}
         animate={{ x: translateDirection === "left" ? "-3%" : "5%" }}
