@@ -35,7 +35,7 @@ export const SingleTextLineContainer = ({
         className={clsx(`w-full whitespace-nowrap`)}
         initial={{ x: 0 }}
         animate={{ x: translateDirection === "left" ? "-3%" : "5%" }}
-        exit={{ x: "100%", opacity: 0 }}
+        exit={{ x: 0, opacity: 0 }}
         transition={{
           repeat: Infinity,
           repeatType: "reverse",

@@ -66,7 +66,7 @@ const hourTextMap: Record<HourDigit, HourText> = {
 
 export const getHourText = (hours: number, minutes: number) => {
   let result;
-  if (minutes <= 30) result = hours;
+  if (minutes < 38) result = hours;
   else result = hours + 1;
 
   return hourTextMap[(result % 12) as HourDigit];
