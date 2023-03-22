@@ -13,7 +13,7 @@ export const TextBackground = () => {
   return (
     <div
       className={clsx(
-        "fixed mt-20 w-full mx-auto select-none text-center space-y-2"
+        "fixed w-full mx-auto select-none text-center space-y-2 translate-y-[-50%] top-[50%]"
       )}
     >
       <MinuteText />

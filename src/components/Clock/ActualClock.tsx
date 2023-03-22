@@ -15,7 +15,7 @@ const SingleCharacter = forwardRef((props: { character: string }, ref) => {
     <motion.div
       // @ts-ignore
       ref={ref}
-      className={clsx("inline-block tabular-nums")}
+      className={clsx("inline-block tabular-nums font-mono")}
       initial={{ y: -15, opacity: 0, rotateX: "90deg" }}
       animate={{ y: 0, opacity: 1, rotateX: "0deg" }}
       exit={{ y: 15, opacity: 0, rotateX: "90deg" }}
