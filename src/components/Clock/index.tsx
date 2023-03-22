@@ -12,10 +12,6 @@ import {
 } from "./atoms";
 
 export const Clock = () => {
-  const setHourAtom = useSetAtom(hourAtom);
-  const setMinuteAtom = useSetAtom(minuteAtom);
-  const setSecondAtom = useSetAtom(secondAtom);
-  const setIsHardcodingTime = useSetAtom(isHardcodingTimeAtom);
   const isClockInitialized = useAtomValue(isClockInitializedAtom);
 
   useClockAtomsInitialization();
@@ -25,17 +21,6 @@ export const Clock = () => {
 
   return (
     <>
-      <input
-        type="time"
-        onChange={(e) => {
-          const [hour, minute] = e.target.value.split(":");
-
-          setHourAtom(parseInt(hour) % 12);
-          setMinuteAtom(parseInt(minute));
-          setSecondAtom(0);
-          setIsHardcodingTime(true);
-        }}
-      />
       <div>
         <TextBackground />
 

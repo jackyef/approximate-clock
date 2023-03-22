@@ -1,9 +1,9 @@
-import Head from 'next/head'
-import { Inter } from 'next/font/google'
-import clsx from 'clsx'
-import { Clock } from '@/components/Clock'
+import Head from "next/head";
+import { DM_Sans } from "next/font/google";
+import clsx from "clsx";
+import { Clock } from "@/components/Clock";
 
-const inter = Inter({ subsets: ['latin'] })
+const mainFont = DM_Sans({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function Home() {
   return (
@@ -14,9 +14,11 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={clsx('w-full min-h-screen max-h-screen', inter.className)}>
+      <main
+        className={clsx("w-full min-h-screen max-h-screen", mainFont.className)}
+      >
         <Clock />
       </main>
     </>
-  )
+  );
 }
