@@ -10,6 +10,7 @@ import {
 } from "./atoms";
 import { Settings } from "iconoir-react";
 import { TimeInput } from "./TimeInput";
+import { getCurrentHHmm } from "@/lib/time";
 
 const SingleCharacter = forwardRef((props: { character: string }, ref) => {
   return (
@@ -124,7 +125,7 @@ export const ActualClock = () => {
                 setShowClockSettings(false);
                 setIsHardcodingTime(false);
               }}
-              defaultValue={`${new Date().getHours()}:${new Date().getMinutes()}`}
+              defaultValue={getCurrentHHmm()}
               onChange={(e) => {
                 const [hour, minute] = e.target.value.split(":");
 

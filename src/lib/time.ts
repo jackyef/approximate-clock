@@ -71,3 +71,11 @@ export const getHourText = (hours: number, minutes: number) => {
 
   return hourTextMap[(result % 12) as HourDigit];
 };
+
+export const getCurrentHHmm = () => {
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+
+  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+}
