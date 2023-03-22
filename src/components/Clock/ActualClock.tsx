@@ -45,17 +45,19 @@ export const ActualClock = () => {
   const amOrPm = hour < 12 ? "AM" : "PM";
 
   const second = useAtomValue(secondAtom);
-  const secondDigits = String(second).split("");
-
-  if (secondDigits.length === 1) secondDigits.unshift("0");
-
+  const secondDigits = String(second).padStart(2, "0").split("");
   const minute = useAtomValue(minuteAtom);
-  const minuteDigits = String(minute).split("");
-
-  if (minuteDigits.length === 1) minuteDigits.unshift("0");
+  const minuteDigits = String(minute).padStart(2, "0").split("");
 
   return (
     <div
+      onBlur={(e) => {
+        // Hide the TimeInput if the user clicks outside this div
+        if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+          setShowClockSettings(false);
+          setIsHardcodingTime(false);
+        }
+      }}
       className={clsx(
         "text-xl",
         "flex flex-col items-center transition-opacity",
@@ -94,15 +96,14 @@ export const ActualClock = () => {
               />
             ))}
 
-          <div key={"spacer4"} className="inline-block w-4" />
-
           <button
+            className="ml-4"
             onClick={() => {
-              if (showClockSettings) {
+              if (!showClockSettings) {
+                setShowClockSettings(true);
+              } else {
                 setShowClockSettings(false);
                 setIsHardcodingTime(false);
-              } else {
-                setShowClockSettings(true);
               }
             }}
           >
@@ -121,10 +122,6 @@ export const ActualClock = () => {
           >
             <TimeInput
               shouldFocusOnMount
-              onBlur={() => {
-                setShowClockSettings(false);
-                setIsHardcodingTime(false);
-              }}
               defaultValue={getCurrentHHmm()}
               onChange={(e) => {
                 const [hour, minute] = e.target.value.split(":");
