@@ -9,6 +9,7 @@ import {
   secondAtom,
 } from "./atoms";
 import { Settings } from "iconoir-react";
+import { TimeInput } from "./TimeInput";
 
 const SingleCharacter = forwardRef((props: { character: string }, ref) => {
   return (
@@ -53,7 +54,13 @@ export const ActualClock = () => {
   if (minuteDigits.length === 1) minuteDigits.unshift("0");
 
   return (
-    <div className={clsx("text-xl", "flex flex-col items-center")}>
+    <div
+      className={clsx(
+        "text-xl",
+        "flex flex-col items-center transition-opacity",
+        "opacity-60 focus-within:opacity-100 hover:opacity-100"
+      )}
+    >
       <div className={clsx("flex items-center")}>
         <AnimatePresence mode="popLayout">
           {hourDigits.map((character, index) => (
@@ -62,21 +69,21 @@ export const ActualClock = () => {
               character={character}
             />
           ))}
-          <div key={"spacer1"} className="inline-block w-1" />
+          <div key={"spacer1"} className="inline-block w-2" />
           {minuteDigits.map((character, index) => (
             <SingleCharacter
               key={`m-${character}-${index}`}
               character={character}
             />
           ))}
-          <div key={"spacer2"} className="inline-block w-1" />
+          <div key={"spacer2"} className="inline-block w-2" />
           {secondDigits.map((character, index) => (
             <SingleCharacter
               key={`s-${character}-${index}`}
               character={character}
             />
           ))}
-          <div key={"spacer3"} className="inline-block w-1" />
+          <div key={"spacer3"} className="inline-block w-2" />
           {String(amOrPm)
             .split("")
             .map((character, index) => (
@@ -86,7 +93,7 @@ export const ActualClock = () => {
               />
             ))}
 
-          <div key={"spacer4"} className="inline-block w-2" />
+          <div key={"spacer4"} className="inline-block w-4" />
 
           <button
             onClick={() => {
@@ -103,22 +110,28 @@ export const ActualClock = () => {
         </AnimatePresence>
       </div>
 
-      {showClockSettings && (
-        <div>
-          <input
-            type="time"
-            defaultValue={`${new Date().getHours()}:${new Date().getMinutes()}`}
-            onChange={(e) => {
-              const [hour, minute] = e.target.value.split(":");
+      <AnimatePresence>
+        {showClockSettings && (
+          <motion.div
+            className="mt-4"
+            initial={{ y: -10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -10, opacity: 0 }}
+          >
+            <TimeInput
+              defaultValue={`${new Date().getHours()}:${new Date().getMinutes()}`}
+              onChange={(e) => {
+                const [hour, minute] = e.target.value.split(":");
 
-              setHourAtom(parseInt(hour));
-              setMinuteAtom(parseInt(minute));
-              setSecondAtom(0);
-              setIsHardcodingTime(true);
-            }}
-          />
-        </div>
-      )}
+                setHourAtom(parseInt(hour));
+                setMinuteAtom(parseInt(minute));
+                setSecondAtom(0);
+                setIsHardcodingTime(true);
+              }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
