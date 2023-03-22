@@ -24,7 +24,7 @@ export const OutlineText = ({
           )]: !active,
           [clsx(
             "opacity-90 text-gray-900 dark:text-gray-100",
-            "drop-shadow-2xl"
+            "drop-shadow-md"
           )]: active,
         }
       )}

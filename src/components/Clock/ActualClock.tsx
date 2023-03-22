@@ -119,6 +119,11 @@ export const ActualClock = () => {
             exit={{ y: -10, opacity: 0 }}
           >
             <TimeInput
+              shouldFocusOnMount
+              onBlur={() => {
+                setShowClockSettings(false);
+                setIsHardcodingTime(false);
+              }}
               defaultValue={`${new Date().getHours()}:${new Date().getMinutes()}`}
               onChange={(e) => {
                 const [hour, minute] = e.target.value.split(":");
